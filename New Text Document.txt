@@ -1,0 +1,61 @@
+create table branch
+(
+branch_name varchar2(20),
+branch_city varchar2(20),
+assests number(9,3),
+primary key(branch_name)
+);
+
+create table accounts
+(
+accno number(10),
+branch_name varchar2(20),
+balance number(10,2),
+primary key(accno),
+foreign key(branch_name) references branch(branch_name)
+);
+
+
+
+create table customer
+(
+customer_name varchar2(20),
+customer_street varchar2(20),
+customer_city varchar2(20),
+primary key(customer_name)
+);
+
+create table depositer
+(
+customer_name varchar(20),
+accno number(10),
+primary key(accno),
+foreign key(customer_name) references depositor(customer_name),
+foreign key(accno) references accounts(accno)
+);
+
+create table loan
+(
+loan_no number(10),
+branch_name varchar2(20),
+amount number(10,2),
+primary key(loan_no),
+foreign key(branch_name) references branch(branch_name)
+);
+
+create table borrower
+(
+customer_name varchar2(20),
+loan_no number(10),
+foreign key(customer_name) references depositor(customer_name),
+foreign key(loan_no) references loan(loan_no)
+);
+
+insert into branch values('&branch_name','&branch_city',&assets);
+insert into accounts values(&accno,'&branch_name',&balance);
+insert into depositor values('&customer_name','&customer_street','&customer_city');
+insert into loan values(&loan_no,'&branch_name',&amount);
+insert into borrower values('&customer_name',&loan_no);
+insert into depositer values('&customer_name',&accno);
+
+select * from borrower;
